@@ -1,0 +1,77 @@
+---
+title: "HDupre_HW1_DATA624"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(ggplot2)
+library(tsibble)
+library(fpp3)
+```
+
+## 2.1
+### GAFA
+```{r}
+help(gafa_stock)
+head(gafa_stock)
+autoplot(gafa_stock, Adj_Close) +
+  labs(title = 'GAFA Adjusted Closing Price',
+       y = 'Price ($)',
+       x = 'Year')
+
+```
+
+#### The interval on the GAFA data appears to be daily but the [!] symbol when we call gafa_stock indicates that the tsibble object has no set interval.
+
+### PBS
+```{r}
+head(PBS)
+help(PBS)
+autoplot(PBS, Scripts) +
+  labs(title = 'Number of Prescriptions',
+       y = 'Total',
+       x = 'Year') +
+  theme(legend.position='none')
+```
+
+#### The interval on the PBS data is monthly, as stated in the help documentation.
+
+### vic_elec
+```{r}
+head(vic_elec)
+help(vic_elec)
+autoplot(vic_elec, Demand) +
+  labs(title = 'Victoria Electricity Demand',
+       y = 'Demand',
+       x = 'Date')
+```
+
+#### The interval on the vic_elec data is half-hourly.
+
+### pelt
+```{r}
+head(pelt)
+help(pelt)
+autoplot(pelt, Hare) +
+  labs(title = 'Count of Hare Pelts',
+       y = 'Pelts',
+       x = 'Year')
+
+```
+
+#### The interval for the pelt trading record data is yearly, as indicated by the [1Y] when calling the tsibble object.
+
+
+## 2.2
+
+```{r}
+my_gafa <- gafa_stock
+
+my_gada %>%
+  group_by(Symbol) %>%
+  filter(Close == max(Close))
+
+```
